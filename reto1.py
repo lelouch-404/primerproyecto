@@ -65,14 +65,23 @@ def verificar():
     elif resultado_logica == "nino":
         resultado.config(text="eres un niño", fg ="green")
         historial.append(f"{nombre} - niño")
+        entrada_edad.delete(0, tk.END)
+        entrada_nombre.delete(0, tk.END)
+        entrada_nombre.focus()
 
     elif resultado_logica == "adolescente":
         resultado.config(text= "eres un adolescente",  fg="green")
         historial.append(f"{nombre} - adolescente")
+        entrada_edad.delete(0, tk.END)
+        entrada_nombre.delete(0, tk.END)
+        entrada_nombre.focus()
 
     elif resultado_logica == "adulto":
         resultado.config(text= "eres un adulto", fg="green")
         historial.append(f"{nombre} - adulto")
+        entrada_edad.delete(0, tk.END)
+        entrada_nombre.delete(0, tk.END)
+        entrada_nombre.focus()
 
 
 def mostrar_historial():
@@ -86,8 +95,15 @@ def mostrar_historial():
 
     texto = "\n".join(historial)
 
-    label_historial = tk.Label(ventana_historial, text=texto, justify="left")
-    label_historial.pack(padx=10, pady=10)
+    text_widget = tk.Text(ventana_historial)
+    text_widget.pack(side="left", fill="both", expand=True)
+
+    scrollbar = tk.Scrollbar(ventana_historial, command=text_widget.yview)
+    scrollbar.pack(side="right", fill="y")
+
+    text_widget.config(yscrollcommand=scrollbar.set)
+
+    text_widget.insert("1.0", texto)
 
 boton = tk.Button(ventana, text="Verificar", command=verificar,width=25)
 boton.grid(row=3,column=0,columnspan=2,pady=10)
